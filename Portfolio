@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Portfolio — Asiatec</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+.port-hero{min-height:42vh;display:flex;align-items:flex-end;padding:110px 5% 56px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 60% 20%,rgba(26,61,204,.2),transparent 60%),var(--bg)}
+.port-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,232,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,232,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none}
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px}
+.fb{padding:8px 20px;border-radius:5px;border:1.5px solid rgba(0,200,232,.2);background:transparent;color:var(--grey2);font-size:.76rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:var(--font-body);letter-spacing:.5px;text-transform:uppercase}
+.fb.on,.fb:hover{background:var(--cyan);border-color:var(--cyan);color:var(--bg);box-shadow:0 0 16px rgba(0,200,232,.3)}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:28px}
+.pc{background:rgba(9,13,46,.8);border:1px solid rgba(0,200,232,.12);border-radius:14px;overflow:hidden;transition:all .35s;cursor:pointer}
+.pc:hover{border-color:rgba(0,200,232,.4);box-shadow:0 0 40px rgba(0,200,232,.12);transform:translateY(-6px)}
+.pc-thumb{height:220px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
+.pc-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,232,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,232,.05) 1px,transparent 1px);background-size:20px 20px}
+.pc-glow{position:absolute;inset:0;opacity:.5}
+.pc-ico{position:relative;z-index:2;filter:drop-shadow(0 0 20px rgba(0,200,232,.5))}
+.pc-ov{position:absolute;inset:0;background:rgba(6,9,31,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;transition:opacity .3s;z-index:3}
+.pc:hover .pc-ov{opacity:1}
+.pc-body{padding:26px}
+.pc-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.pc-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--cyan);background:rgba(0,200,232,.08);border:1px solid rgba(0,200,232,.15);padding:2px 9px;border-radius:3px}
+.pc-title{font-family:var(--font-head);font-weight:700;font-size:.95rem;letter-spacing:.3px;color:var(--white);margin-bottom:8px}
+.pc-desc{font-size:.84rem;color:var(--grey);font-weight:300;line-height:1.65;margin-bottom:14px}
+.pc-result{display:flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;color:#4ade80}
+.pc-tech{margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,200,232,.08)}
+.pc-tech-label{font-size:.62rem;color:var(--grey);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.pc-tech-list{display:flex;gap:6px;flex-wrap:wrap}
+.pc-titem{font-size:.66rem;color:rgba(255,255,255,.5);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:3px}
+
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px)}
+.modal-bg.show{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);border:1px solid rgba(0,200,232,.2);border-radius:16px;max-width:680px;width:90%;max-height:85vh;overflow-y:auto;padding:36px;position:relative;box-shadow:0 0 60px rgba(0,200,232,.12)}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(0,200,232,.1);border:1px solid rgba(0,200,232,.2);color:var(--cyan);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-ico{font-size:3rem;margin-bottom:16px}
+.modal-title{font-family:var(--font-head);font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:8px}
+.modal-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.modal-tag{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--cyan);background:rgba(0,200,232,.08);border:1px solid rgba(0,200,232,.15);padding:2px 9px;border-radius:3px}
+.modal-desc{font-size:.9rem;color:var(--grey);line-height:1.75;font-weight:300;margin-bottom:20px}
+.modal-section{margin-bottom:18px}
+.modal-section h4{font-family:var(--font-head);font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.modal-section ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.modal-section ul li{font-size:.84rem;color:rgba(255,255,255,.75);font-weight:300;line-height:1.55;padding-left:14px;position:relative}
+.modal-section ul li::before{content:'▸';position:absolute;left:0;color:var(--cyan);font-size:.7rem}
+.modal-result{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:8px;padding:14px;color:#4ade80;font-size:.85rem;font-weight:500}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <svg class="nav-logo-svg" viewBox="0 0 42 42" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2651e8"/><stop offset="100%" stop-color="#6b3fa0"/></linearGradient></defs><path d="M8 35L21 7L34 35" stroke="url(#lg)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13 27L29 27" stroke="url(#lg)" stroke-width="3" stroke-linecap="round"/><ellipse cx="21" cy="23" rx="13" ry="5.5" stroke="url(#lg)" stroke-width="1.8" fill="none" opacity=".6"/><circle cx="29" cy="11" r="2.2" fill="#00c8e8"/><circle cx="25" cy="15" r="1.5" fill="#6b3fa0"/></svg>
+    <div class="nav-logo-text"><div class="name">ASIATEC</div><div class="sub">Software Solutions</div></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html" class="active">Portfolio</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+  <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="index.html">Home</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="about.html">About</a><a href="contact.html">Contact</a>
+  <a href="contact.html" class="nav-cta">Get a Quote</a>
+</div>
+
+<div class="port-hero">
+  <div style="position:relative;z-index:1;max-width:700px">
+    <div class="section-label">Our Work</div>
+    <h1 class="section-title" style="font-size:clamp(2rem,4vw,3rem)">Every Project. <span class="hl">Every Detail.</span><br/>Every Outcome.</h1>
+    <p class="section-sub">Real systems built from scratch — hardware, AI, web, design. Click any card to see the full technical breakdown.</p>
+  </div>
+</div>
+
+<section style="padding:60px 5% 90px;background:var(--bg2)">
+  <div class="filter-bar">
+    <button class="fb on" data-f="all">All Projects</button>
+    <button class="fb" data-f="hardware">Hardware & FPGA</button>
+    <button class="fb" data-f="ml">Machine Learning</button>
+    <button class="fb" data-f="web">Web Dev</button>
+    <button class="fb" data-f="game">Games</button>
+    <button class="fb" data-f="design">Design</button>
+    <button class="fb" data-f="iot">IoT & Solar</button>
+  </div>
+  <div class="pg" id="pg"></div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="mclose">✕</button>
+    <div id="mContent"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="nav-logo" style="display:inline-flex"><svg width="34" height="34" viewBox="0 0 42 42" fill="none"><defs><linearGradient id="flg" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2651e8"/><stop offset="100%" stop-color="#6b3fa0"/></linearGradient></defs><path d="M8 35L21 7L34 35" stroke="url(#flg)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13 27L29 27" stroke="url(#flg)" stroke-width="3" stroke-linecap="round"/><ellipse cx="21" cy="23" rx="13" ry="5.5" stroke="url(#flg)" stroke-width="1.8" fill="none" opacity=".6"/><circle cx="29" cy="11" r="2.2" fill="#00c8e8"/></svg><div class="nav-logo-text" style="margin-left:10px"><div class="name">ASIATEC</div><div class="sub">Software Solutions</div></div></a>
+      <p>Building tomorrow's digital infrastructure, today. From Karachi to the world.</p>
+      <div class="footer-social"><a href="https://github.com/Fakhariqblal/Fakhariqblal.github.io" target="_blank" class="social-btn">GH</a><a href="#" class="social-btn">in</a><a href="#" class="social-btn">𝕏</a></div>
+    </div>
+    <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="services.html#web">Web Development</a></li><li><a href="services.html#ml">Machine Learning</a></li><li><a href="services.html#hardware">Hardware & FPGA</a></li><li><a href="services.html#design">Design</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:contact@asiatec.io">contact@asiatec.io</a></li><li><a href="#">Karachi, Pakistan</a></li><li><a href="contact.html">Get a Quote</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Asiatec. All rights reserved.</span><span>Crafted with ❤️ in Karachi</span></div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+document.getElementById('hbg').addEventListener('click',()=>document.getElementById('mob').classList.toggle('open'));
+
+const projects=[
+  {
+    cat:'hardware',ico:'🎮',
+    grad:'linear-gradient(135deg,#06091f 0%,#0d1650 50%,#1a3dcc 100%)',
+    tags:['FPGA','Verilog HDL','Hardware','WS2812','VGA'],
+    title:'FPGA Memory Pattern Game',
+    desc:'A fully functional interactive memory game built on Basys3 FPGA using Verilog HDL and Vivado.',
+    details:['6×6 button matrix with debouncing and column-scanning input logic','Custom WS2812 RGB LED driver — single-wire serial protocol with nanosecond-level timing for 24-bit color','Finite State Machine (FSM) core: pattern generation, display, input comparison, result feedback','VGA output at 640×480 — real-time 6×6 grid rendering with score, level, and game-over screen','Bit masking for live comparison between target pattern and user-input mask','Complete FPGA pin mapping: clock, reset, VGA bus, WS2812, Pmod I/O'],
+    tech:['Verilog HDL','Vivado','Basys3 FPGA','WS2812 LEDs','VGA Monitor'],
+    result:'✦ Fully playable on physical hardware — demo shown at university evaluation'
+  },
+  {
+    cat:'hardware',ico:'🕹️',
+    grad:'linear-gradient(135deg,#06091f 0%,#2d1060 50%,#6b3fa0 100%)',
+    tags:['FPGA','Arcade','Escape System','Verilog'],
+    title:'FPGA Arcade — Escape System',
+    desc:'An FPGA-based arcade escape game with sensor integration, timed challenges, and physical I/O control.',
+    details:['Multi-stage escape puzzle with timed FSM controller','Physical input via Pmod sensors and button matrix','LED and buzzer feedback for clue reveals and win/fail states','Seven-segment display countdown timer with configurable difficulty','Modular Verilog architecture for easy level expansion'],
+    tech:['Verilog HDL','Vivado','Basys3 FPGA','Pmod Modules','7-Segment Display'],
+    result:'✦ Awarded best hardware project in course evaluation'
+  },
+  {
+    cat:'hardware',ico:'🤖',
+    grad:'linear-gradient(135deg,#06091f 0%,#065f46 50%,#059669 100%)',
+    tags:['Robotics','PBL','Hardware','Autonomous'],
+    title:'PBL Robotics Project',
+    desc:'Problem-based learning autonomous robotics system with sensor-driven navigation and obstacle avoidance.',
+    details:['Autonomous navigation using IR and ultrasonic sensor arrays','Line-following algorithm with PID speed control','Obstacle detection and avoidance state machine','Wireless control module for manual override','Modular chassis design for rapid iteration and testing'],
+    tech:['Arduino','C++','IR Sensors','Ultrasonic','Motor Driver'],
+    result:'✦ Successfully navigated a custom obstacle course autonomously'
+  },
+  {
+    cat:'iot',ico:'☀️',
+    grad:'linear-gradient(135deg,#06091f 0%,#78350f 50%,#f59e0b 100%)',
+    tags:['IoT','Solar','Hardware','Monitoring'],
+    title:'Solar Panel Management System',
+    desc:'Smart solar energy monitoring and management system with real-time efficiency tracking and cloud reporting.',
+    details:['Real-time voltage and current monitoring with ADC sampling','Efficiency calculation and panel health scoring algorithms','Cloud data logging via MQTT to dashboard','Automated fault detection with alert notifications','Historical data visualization for trend analysis'],
+    tech:['Arduino','ESP32','MQTT','Node.js','Chart.js'],
+    result:'✦ Deployed on a test array, achieving 18% efficiency improvement through optimization alerts'
+  },
+  {
+    cat:'ml',ico:'🧠',
+    grad:'linear-gradient(135deg,#06091f 0%,#1e1b4b 50%,#4c1d95 100%)',
+    tags:['Machine Learning','Python','KD-Tree','KNN','Tkinter'],
+    title:'Thyroid Cancer Prediction System',
+    desc:'Desktop Python app predicting thyroid cancer risk from patient data using a scratch-built KD-Tree and KNN engine.',
+    details:['KD-Tree built from scratch — organizes 9-dimensional patient records for O(log n) search, insert, delete','K-Nearest Neighbors (k=5) with distance-weighted confidence scoring','Label decoding for 6 encoded classes (e.g. "High Risk, Malignant")','Data preprocessing: categorical encoding, StandardScaler normalization, CSV persistence','Full CRUD: predict & insert new records, search by Patient ID, delete — all persisted','Tkinter GUI with 3 tabs: Predict & Insert, Search, Delete'],
+    tech:['Python','Tkinter','Pandas','Scikit-learn','CSV'],
+    result:'✦ 94.3% classification accuracy on 50MB real thyroid dataset'
+  },
+  {
+    cat:'web',ico:'💼',
+    grad:'linear-gradient(135deg,#06091f 0%,#0c4a6e 50%,#2651e8 100%)',
+    tags:['Web','FastAPI','AI','Gemini','Hackathon'],
+    title:'Career OS — AI Career Platform',
+    desc:'5-engine AI career intelligence platform built for Build With AI Hackathon 2026 at GDG on Campus DHA Suffa.',
+    details:['Hiring Manager Lens: scores resume on visual hierarchy (OpenCV), ATS integrity, JD match, benchmarking — Gemini 2.0 Flash coaching','Interview Rebound: post-interview autopsy from transcript or audio (AssemblyAI); scores technical depth, filler words, tone','Skill Arbitrage: live job market data via Adzuna/Reed APIs, skill gap radar, sprint plan, obsolescence risk, ROI projections','Persona Play: mock interviews vs 4 AI archetypes (Stone-Faced Architect, Rushed Founder, Non-Tech HR, Deep-Diver)','Narrative Architect: analyzes GitHub + resume + LinkedIn together, generates portfolio content and talk tracks','Dashboard: Readiness Score composite metric + Kanban job tracker linking resume versions to outcomes'],
+    tech:['Python 3.12','FastAPI','SQLModel','Gemini 2.0 Flash','AssemblyAI','OpenCV','Tailwind CSS','Docker'],
+    result:'✦ Built for Build With AI Hackathon 2026 — submitted with full working demo'
+  },
+  {
+    cat:'web',ico:'🌐',
+    grad:'linear-gradient(135deg,#06091f 0%,#0369a1 50%,#2651e8 100%)',
+    tags:['WordPress','Elementor','Agency Site'],
+    title:'Molance Agency Website',
+    desc:'Professional multi-page business website for a digital agency, built with WordPress and Elementor.',
+    details:['Pages: Home, About, Services, Contact, Blog','Smart Slider 3 hero section with animated transitions','WPForms contact integration with email routing','Astra theme customized with full brand identity','SEO-optimized page structure and meta configuration'],
+    tech:['WordPress','Elementor','Astra Theme','Smart Slider 3','WPForms'],
+    result:'✦ Live production site serving client since launch'
+  },
+  {
+    cat:'game',ico:'🐍',
+    grad:'linear-gradient(135deg,#06091f 0%,#14532d 50%,#16a34a 100%)',
+    tags:['Python','Terminal Game','DSA','CLI'],
+    title:'Terminal-Based Python Game',
+    desc:'Feature-rich terminal game with real-time rendering, physics, level progression, and leaderboard system.',
+    details:['Custom terminal rendering engine using ANSI escape codes','Real-time keyboard input handling without blocking','Physics simulation: gravity, velocity, collision detection','Level progression system with increasing difficulty curves','High score persistence with file I/O and leaderboard display','Multiple game modes and difficulty settings'],
+    tech:['Python','ANSI Escape Codes','File I/O','sys','msvcrt / tty'],
+    result:'✦ Runs entirely in CLI with smooth 30fps terminal rendering'
+  },
+  {
+    cat:'game',ico:'🏄',
+    grad:'linear-gradient(135deg,#06091f 0%,#7c2d12 50%,#ea580c 100%)',
+    tags:['IRL Game','Hardware','Sensor','Real-time'],
+    title:'IRL Subway Surfers',
+    desc:'Real-world Subway Surfers replica using physical sensors for jump and dodge detection — hardware meets gaming.',
+    details:['Accelerometer/gyroscope sensor integration for physical gesture detection','Jump detection via threshold-based acceleration spike analysis','Lane dodge via left/right tilt recognition','Real-time game state rendering on screen','Calibration system for different body sizes and play styles','Score tracking and lives system matching the original game loop'],
+    tech:['Python','Arduino','MPU6050','Serial Communication','Pygame'],
+    result:'✦ Fully playable with physical jumps and dodges controlling the character'
+  },
+  {
+    cat:'game',ico:'💰',
+    grad:'linear-gradient(135deg,#06091f 0%,#1e3a5f 50%,#0d9488 100%)',
+    tags:['Finance','DSA','Fenwick Tree','Python'],
+    title:'Finance Management System',
+    desc:'Finance tracker using a Fenwick Tree (Binary Indexed Tree) for O(log n) prefix sum queries over transaction history.',
+    details:['Fenwick Tree implementation for O(log n) range sum and point update queries','Transaction history with category tagging and date filtering','Monthly/weekly expense summary via efficient range queries','Budget alert system using prefix sums to compare against limits','Export to CSV with cumulative balance calculations','CLI dashboard with color-coded budget status indicators'],
+    tech:['Python','Fenwick Tree','Pandas','CSV','ANSI CLI'],
+    result:'✦ 50x faster range queries vs naive approach on 100k transaction dataset'
+  },
+  {
+    cat:'game',ico:'🚗',
+    grad:'linear-gradient(135deg,#06091f 0%,#312e81 50%,#6b3fa0 100%)',
+    tags:['DSA','Skip List','Python','System'],
+    title:'Auto Management System',
+    desc:'Vehicle registry and management system powered by a Skip List data structure for fast multi-key search.',
+    details:['Skip List implementation from scratch with probabilistic balancing','O(log n) average-case search, insert, delete for vehicle records','Multi-key indexing: search by plate number, owner name, registration date','Fleet analytics: utilization rates, maintenance due alerts, cost tracking','CRUD interface with validation and duplicate detection','Export system for reports and insurance documentation'],
+    tech:['Python','Skip List','CSV','CLI','Argparse'],
+    result:'✦ O(log n) search vs O(n) in standard list — 40x faster on large fleets'
+  },
+  {
+    cat:'design',ico:'🎨',
+    grad:'linear-gradient(135deg,#06091f 0%,#4a044e 50%,#7c3aed 100%)',
+    tags:['Graphic Design','Branding','Logos','Print'],
+    title:'Commercial Design Portfolio',
+    desc:'Client design work spanning logos, catalogs, product ads, banners, and brand identity systems.',
+    details:['Logos: Al-Safha, Asiatec (white bg variant), Kreaton','Banners: Kreaton promotional series','Product ads: analytical balances, weigh bridges, TDS meters, price counters (multiple variants each)','Content: food menu design, content writing service visuals','Print: multi-page Al-Safha product catalog PDF (14MB, professional layout)','All delivered print-ready at correct DPI and color profile'],
+    tech:['Adobe Illustrator','Adobe Photoshop','InDesign','Figma'],
+    result:'✦ 14MB professional product catalog delivered for commercial distribution'
+  },
+];
+
+const ro=new IntersectionObserver(e=>{e.forEach((x,i)=>{if(x.isIntersecting){setTimeout(()=>x.target.classList.add('visible'),i*55);ro.unobserve(x.target)}})},{threshold:.06});
+
+function render(f){
+  const pg=document.getElementById('pg');pg.innerHTML='';
+  projects.filter(p=>f==='all'||p.cat===f).forEach((p,i)=>{
+    const d=document.createElement('div');d.className='pc reveal';d.dataset.i=projects.indexOf(p);
+    d.innerHTML=`<div class="pc-thumb" style="background:${p.grad}"><div class="pc-grid"></div><div class="pc-glow" style="background:${p.grad}"></div><span class="pc-ico">${p.ico}</span><div class="pc-ov"><span class="btn-cyber" style="font-size:.75rem;cursor:pointer" onclick="openModal(${projects.indexOf(p)})">View Full Details</span></div></div><div class="pc-body"><div class="pc-tags">${p.tags.slice(0,3).map(t=>`<span class="pc-tag">${t}</span>`).join('')}</div><div class="pc-title">${p.title}</div><p class="pc-desc">${p.desc}</p><div class="pc-result">${p.result}</div><div class="pc-tech"><div class="pc-tech-label">Built With</div><div class="pc-tech-list">${p.tech.map(t=>`<span class="pc-titem">${t}</span>`).join('')}</div></div></div>`;
+    pg.appendChild(d);ro.observe(d);
+  });
+}
+
+document.querySelectorAll('.fb').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));b.classList.add('on');render(b.dataset.f);
+}));
+render('all');
+
+function openModal(i){
+  const p=projects[i];
+  document.getElementById('mContent').innerHTML=`<div class="modal-ico">${p.ico}</div><div class="modal-title">${p.title}</div><div class="modal-tags">${p.tags.map(t=>`<span class="modal-tag">${t}</span>`).join('')}</div><p class="modal-desc">${p.desc}</p><div class="modal-section"><h4>What Was Built</h4><ul>${p.details.map(d=>`<li>${d}</li>`).join('')}</ul></div><div class="modal-section"><h4>Tech Stack</h4><div style="display:flex;gap:7px;flex-wrap:wrap">${p.tech.map(t=>`<span class="pc-titem" style="font-size:.76rem">${t}</span>`).join('')}</div></div><div class="modal-result" style="margin-top:20px">${p.result}</div>`;
+  document.getElementById('modalBg').classList.add('show');
+}
+document.getElementById('mclose').addEventListener('click',()=>document.getElementById('modalBg').classList.remove('show'));
+document.getElementById('modalBg').addEventListener('click',e=>{if(e.target===document.getElementById('modalBg'))document.getElementById('modalBg').classList.remove('show')});
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+</script>
+</body></html>
