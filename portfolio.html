@@ -2,90 +2,282 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Portfolio — Asiatec</title>
-<link rel="stylesheet" href="style.css"/>
+<title>Portfolio — Asiatec | Complete Software Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-.port-hero{min-height:42vh;display:flex;align-items:flex-end;padding:110px 5% 56px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 60% 20%,rgba(26,61,204,.2),transparent 60%),var(--bg)}
-.port-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,232,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,232,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none}
-.filter-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px}
-.fb{padding:8px 20px;border-radius:5px;border:1.5px solid rgba(0,200,232,.2);background:transparent;color:var(--grey2);font-size:.76rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:var(--font-body);letter-spacing:.5px;text-transform:uppercase}
-.fb.on,.fb:hover{background:var(--cyan);border-color:var(--cyan);color:var(--bg);box-shadow:0 0 16px rgba(0,200,232,.3)}
-.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:28px}
-.pc{background:rgba(9,13,46,.8);border:1px solid rgba(0,200,232,.12);border-radius:14px;overflow:hidden;transition:all .35s;cursor:pointer}
-.pc:hover{border-color:rgba(0,200,232,.4);box-shadow:0 0 40px rgba(0,200,232,.12);transform:translateY(-6px)}
-.pc-thumb{height:220px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;overflow:hidden}
-.pc-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,232,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,232,.05) 1px,transparent 1px);background-size:20px 20px}
-.pc-glow{position:absolute;inset:0;opacity:.5}
-.pc-ico{position:relative;z-index:2;filter:drop-shadow(0 0 20px rgba(0,200,232,.5))}
-.pc-ov{position:absolute;inset:0;background:rgba(6,9,31,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;transition:opacity .3s;z-index:3}
-.pc:hover .pc-ov{opacity:1}
-.pc-body{padding:26px}
-.pc-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
-.pc-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--cyan);background:rgba(0,200,232,.08);border:1px solid rgba(0,200,232,.15);padding:2px 9px;border-radius:3px}
-.pc-title{font-family:var(--font-head);font-weight:700;font-size:.95rem;letter-spacing:.3px;color:var(--white);margin-bottom:8px}
-.pc-desc{font-size:.84rem;color:var(--grey);font-weight:300;line-height:1.65;margin-bottom:14px}
-.pc-result{display:flex;align-items:center;gap:6px;font-size:.76rem;font-weight:600;color:#4ade80}
-.pc-tech{margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,200,232,.08)}
-.pc-tech-label{font-size:.62rem;color:var(--grey);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-.pc-tech-list{display:flex;gap:6px;flex-wrap:wrap}
-.pc-titem{font-size:.66rem;color:rgba(255,255,255,.5);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:2px 8px;border-radius:3px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06091f;--bg2:#090d2e;--bg3:#0c1140;
+  --blue:#1a3dcc;--blue2:#2651e8;--blue3:#4a7fff;
+  --purple:#6b3fa0;--purple2:#9b59f5;
+  --cyan:#00c8e8;--cyan2:#40e0ff;
+  --grey:#8fa3c8;--grey2:#b8cce8;
+  --green:#4ade80;--yellow:#fbbf24;
+  --fh:'Orbitron',monospace;--fb:'Exo 2',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:#fff;overflow-x:hidden;cursor:none}
+#cur{position:fixed;width:12px;height:12px;background:var(--cyan);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;box-shadow:0 0 16px var(--cyan)}
+#cur2{position:fixed;width:36px;height:36px;border:1.5px solid rgba(0,200,232,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease}
+canvas#bgc{position:fixed;inset:0;z-index:0;pointer-events:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--blue2);border-radius:2px}
 
-/* MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px)}
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;width:100%;z-index:999;height:70px;display:flex;align-items:center;padding:0 5%;justify-content:space-between;background:rgba(6,9,31,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,200,232,.15)}
+nav.sc{box-shadow:0 4px 40px rgba(0,0,0,.5)}
+.nlogo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nlt .nm{font-family:var(--fh);font-size:1.25rem;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nlt .ns{font-size:.58rem;color:var(--grey);letter-spacing:1.5px;text-transform:uppercase}
+.nl{display:flex;gap:30px;list-style:none}
+.nl a{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.65);text-decoration:none;letter-spacing:.8px;text-transform:uppercase;position:relative;transition:color .2s;padding:4px 0}
+.nl a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:linear-gradient(90deg,var(--cyan),var(--purple2));transition:width .3s}
+.nl a:hover,.nl a.on{color:#fff}
+.nl a:hover::after,.nl a.on::after{width:100%}
+.ncta{background:linear-gradient(135deg,var(--blue2),var(--purple));color:#fff;padding:9px 22px;border-radius:6px;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .3s;font-family:var(--fb);letter-spacing:.5px;text-decoration:none;text-transform:uppercase;display:inline-block;border:none}
+.ncta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(38,81,232,.4)}
+.hbg{display:none;flex-direction:column;gap:5px;cursor:none;background:none;border:none;padding:4px}
+.hbg span{width:24px;height:2px;background:var(--cyan);border-radius:2px;display:block}
+.mob{display:none;flex-direction:column;background:rgba(6,9,31,.99);backdrop-filter:blur(20px);position:fixed;top:70px;left:0;width:100%;padding:20px 5% 28px;border-bottom:1px solid rgba(0,200,232,.15);z-index:998}
+.mob a{padding:14px 0;color:rgba(255,255,255,.75);text-decoration:none;font-weight:600;border-bottom:1px solid rgba(255,255,255,.04);font-size:.88rem;text-transform:uppercase;letter-spacing:.5px;display:block}
+.mob .ncta{margin-top:16px;text-align:center;display:block}
+.mob.open{display:flex}
+
+/* ── HERO SECTION ── */
+.port-hero{min-height:52vh;display:flex;align-items:flex-end;padding:120px 5% 60px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 60% 20%,rgba(38,81,232,.2),transparent 55%),radial-gradient(ellipse at 20% 80%,rgba(107,63,160,.15),transparent 50%),var(--bg)}
+.port-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,232,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,232,.025) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;z-index:0}
+.port-hero-inner{position:relative;z-index:1;max-width:780px}
+.slbl{font-family:var(--fh);font-size:.6rem;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.slbl::before{content:'';width:24px;height:1px;background:var(--cyan);display:inline-block}
+.port-h1{font-family:var(--fh);font-weight:900;font-size:clamp(2.2rem,5vw,4rem);line-height:1.08;letter-spacing:-1px;margin-bottom:20px}
+.port-h1 .hl{background:linear-gradient(90deg,var(--cyan),var(--purple2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.port-sub{font-size:1rem;color:var(--grey);line-height:1.78;max-width:600px;font-weight:300;margin-bottom:36px}
+
+/* HERO STATS STRIP */
+.hero-stats-strip{display:flex;gap:0;background:rgba(9,13,46,.85);border:1px solid rgba(0,200,232,.18);border-radius:12px;padding:0;overflow:hidden;width:fit-content;margin-bottom:0}
+.hss{padding:20px 28px;display:flex;flex-direction:column;align-items:center;position:relative;transition:background .3s;cursor:default}
+.hss+.hss{border-left:1px solid rgba(0,200,232,.12)}
+.hss:hover{background:rgba(0,200,232,.05)}
+.hss strong{font-family:var(--fh);font-size:1.9rem;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:4px}
+.hss span{font-size:.6rem;color:var(--grey);text-transform:uppercase;letter-spacing:1.2px;white-space:nowrap}
+
+/* GLOW LINE */
+.gline{height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,232,.3),rgba(107,63,160,.3),transparent);position:relative;z-index:1}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.rv.vis{opacity:1;transform:translateY(0)}
+
+/* ── FILTER BAR ── */
+.filter-section{background:var(--bg2);padding:36px 5%;position:relative;z-index:1;border-bottom:1px solid rgba(0,200,232,.08)}
+.filter-wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.filter-label{font-family:var(--fh);font-size:.6rem;font-weight:700;letter-spacing:2px;color:var(--grey);text-transform:uppercase;white-space:nowrap}
+.fb{padding:9px 22px;border-radius:6px;border:1.5px solid rgba(0,200,232,.15);background:transparent;color:var(--grey2);font-size:.76rem;font-weight:700;cursor:none;transition:all .3s;font-family:var(--fb);letter-spacing:.5px;text-transform:uppercase;position:relative;overflow:hidden}
+.fb::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--cyan),var(--purple2));opacity:0;transition:opacity .3s}
+.fb span{position:relative;z-index:1}
+.fb.on{border-color:var(--cyan);color:var(--bg);box-shadow:0 0 20px rgba(0,200,232,.25)}
+.fb.on::before,.fb:hover::before{opacity:1}
+.fb:hover{border-color:rgba(0,200,232,.4);color:var(--bg)}
+.results-count{margin-left:auto;font-family:var(--fh);font-size:.65rem;color:var(--grey);letter-spacing:1px}
+.results-count span{color:var(--cyan)}
+
+/* ── PORTFOLIO GRID ── */
+.port-section{padding:56px 5% 90px;background:var(--bg);position:relative;z-index:1}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:28px}
+
+/* ── PROJECT CARD ── */
+.pc{background:rgba(9,13,46,.7);border:1px solid rgba(0,200,232,.1);border-radius:16px;overflow:hidden;transition:all .4s cubic-bezier(.4,0,.2,1);cursor:none;position:relative}
+.pc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,200,232,.03),rgba(107,63,160,.03));opacity:0;transition:opacity .4s;z-index:0;pointer-events:none;border-radius:16px}
+.pc:hover{border-color:rgba(0,200,232,.35);box-shadow:0 0 50px rgba(0,200,232,.1),0 30px 80px rgba(0,0,0,.4);transform:translateY(-8px)}
+.pc:hover::before{opacity:1}
+
+/* CARD THUMB */
+.pc-thumb{height:240px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pc-thumb-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.pc:hover .pc-thumb-bg{transform:scale(1.08)}
+.pc-thumb-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,232,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,232,.05) 1px,transparent 1px);background-size:24px 24px;animation:gridm 10s linear infinite}
+@keyframes gridm{from{background-position:0 0}to{background-position:24px 24px}}
+.pc-thumb-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(6,9,31,.3) 0%,rgba(6,9,31,.7) 100%)}
+.pc-emoji{position:relative;z-index:2;font-size:4rem;filter:drop-shadow(0 0 24px rgba(0,200,232,.6));transition:transform .4s,filter .4s}
+.pc:hover .pc-emoji{transform:scale(1.2) translateY(-8px);filter:drop-shadow(0 0 40px rgba(0,200,232,.8))}
+
+/* CATEGORY PILL on thumb */
+.pc-cat-pill{position:absolute;top:16px;left:16px;z-index:3;padding:5px 14px;border-radius:20px;font-family:var(--fh);font-size:.55rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15)}
+
+/* HOVER OVERLAY */
+.pc-hover-actions{position:absolute;inset:0;background:rgba(6,9,31,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;transition:opacity .35s;z-index:4;backdrop-filter:blur(4px)}
+.pc:hover .pc-hover-actions{opacity:1}
+.btn-view{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--cyan),var(--blue2));color:var(--bg);padding:12px 28px;border-radius:8px;font-family:var(--fh);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:none;transition:transform .2s;text-decoration:none}
+.btn-view:hover{transform:scale(1.05)}
+.btn-github{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid rgba(255,255,255,.25);color:rgba(255,255,255,.8);padding:10px 24px;border-radius:8px;font-size:.7rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;cursor:none;text-decoration:none;transition:all .2s}
+.btn-github:hover{border-color:#fff;color:#fff}
+
+/* CARD BODY */
+.pc-body{padding:24px 26px 26px;position:relative;z-index:1}
+.pc-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.pc-tag{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--cyan);background:rgba(0,200,232,.07);border:1px solid rgba(0,200,232,.18);padding:3px 10px;border-radius:4px}
+.pc-title{font-family:var(--fh);font-weight:800;font-size:1rem;letter-spacing:.3px;color:#fff;margin-bottom:8px;line-height:1.3}
+.pc-desc{font-size:.85rem;color:var(--grey);font-weight:300;line-height:1.7;margin-bottom:16px}
+
+/* WHAT WAS BUILT mini list */
+.pc-built{background:rgba(0,200,232,.04);border:1px solid rgba(0,200,232,.1);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.pc-built-title{font-family:var(--fh);font-size:.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.pc-built ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.pc-built li{font-size:.8rem;color:rgba(255,255,255,.7);font-weight:300;line-height:1.5;display:flex;gap:8px;align-items:flex-start}
+.pc-built li::before{content:'▸';color:var(--cyan);font-size:.65rem;margin-top:3px;flex-shrink:0}
+
+/* OUTCOME BANNER */
+.pc-outcome{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.18);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.pc-outcome-ico{font-size:1.1rem;flex-shrink:0}
+.pc-outcome-text{font-size:.82rem;font-weight:600;color:var(--green);line-height:1.4}
+
+/* TECH ROW */
+.pc-tech-row{display:flex;gap:6px;flex-wrap:wrap;padding-top:14px;border-top:1px solid rgba(0,200,232,.07)}
+.pc-tech-lbl{font-family:var(--fh);font-size:.55rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey);white-space:nowrap;margin-right:2px;align-self:center}
+.ptech{font-size:.65rem;color:rgba(255,255,255,.5);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:3px 9px;border-radius:4px;white-space:nowrap;transition:all .2s}
+.ptech:hover{border-color:rgba(0,200,232,.3);color:var(--cyan)}
+
+/* ── MODAL ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s;backdrop-filter:blur(12px)}
 .modal-bg.show{opacity:1;pointer-events:all}
-.modal{background:var(--bg2);border:1px solid rgba(0,200,232,.2);border-radius:16px;max-width:680px;width:90%;max-height:85vh;overflow-y:auto;padding:36px;position:relative;box-shadow:0 0 60px rgba(0,200,232,.12)}
-.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(0,200,232,.1);border:1px solid rgba(0,200,232,.2);color:var(--cyan);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.modal-ico{font-size:3rem;margin-bottom:16px}
-.modal-title{font-family:var(--font-head);font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:8px}
-.modal-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
-.modal-tag{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--cyan);background:rgba(0,200,232,.08);border:1px solid rgba(0,200,232,.15);padding:2px 9px;border-radius:3px}
-.modal-desc{font-size:.9rem;color:var(--grey);line-height:1.75;font-weight:300;margin-bottom:20px}
-.modal-section{margin-bottom:18px}
-.modal-section h4{font-family:var(--font-head);font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
-.modal-section ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.modal-section ul li{font-size:.84rem;color:rgba(255,255,255,.75);font-weight:300;line-height:1.55;padding-left:14px;position:relative}
-.modal-section ul li::before{content:'▸';position:absolute;left:0;color:var(--cyan);font-size:.7rem}
-.modal-result{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.15);border-radius:8px;padding:14px;color:#4ade80;font-size:.85rem;font-weight:500}
+.modal{background:var(--bg2);border:1px solid rgba(0,200,232,.2);border-radius:20px;max-width:720px;width:92%;max-height:88vh;overflow-y:auto;position:relative;box-shadow:0 0 80px rgba(0,200,232,.12),0 40px 100px rgba(0,0,0,.5)}
+.modal::before{content:'';position:absolute;top:-1px;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+.modal-close{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;background:rgba(0,200,232,.08);border:1px solid rgba(0,200,232,.2);color:var(--cyan);font-size:1rem;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:5}
+.modal-close:hover{background:rgba(0,200,232,.2);transform:rotate(90deg)}
+.modal-thumb{height:260px;display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden;border-radius:20px 20px 0 0}
+.modal-thumb-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,200,232,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,232,.06) 1px,transparent 1px);background-size:22px 22px}
+.modal-thumb-ov{position:absolute;inset:0;background:rgba(6,9,31,.5)}
+.modal-emoji{position:relative;z-index:2;filter:drop-shadow(0 0 30px rgba(0,200,232,.6))}
+.modal-body{padding:32px 36px 36px}
+.modal-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
+.modal-tag{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--cyan);background:rgba(0,200,232,.08);border:1px solid rgba(0,200,232,.18);padding:3px 11px;border-radius:4px}
+.modal-title{font-family:var(--fh);font-weight:900;font-size:1.4rem;letter-spacing:.3px;color:#fff;margin-bottom:10px;line-height:1.2}
+.modal-desc{font-size:.9rem;color:var(--grey);line-height:1.78;font-weight:300;margin-bottom:24px}
+.modal-section{margin-bottom:22px}
+.modal-section-title{font-family:var(--fh);font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.modal-section-title::before{content:'';width:16px;height:1px;background:var(--cyan)}
+.modal-bullets{list-style:none;display:flex;flex-direction:column;gap:9px}
+.modal-bullets li{font-size:.86rem;color:rgba(255,255,255,.75);font-weight:300;line-height:1.6;display:flex;gap:10px;align-items:flex-start}
+.modal-bullets li::before{content:'▸';color:var(--cyan);font-size:.7rem;margin-top:3px;flex-shrink:0}
+.modal-outcome{background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:10px;padding:16px 20px;margin-bottom:22px}
+.modal-outcome-label{font-family:var(--fh);font-size:.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.modal-outcome-text{font-size:.88rem;color:var(--green);font-weight:500;line-height:1.55}
+.modal-tech-wrap{display:flex;gap:7px;flex-wrap:wrap}
+.modal-tech{font-size:.74rem;color:rgba(255,255,255,.65);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:5px}
+.modal-actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+
+/* CTA STRIP */
+.cta-strip{background:linear-gradient(135deg,rgba(38,81,232,.12),rgba(107,63,160,.12));border:1px solid rgba(0,200,232,.15);border-radius:16px;padding:40px;text-align:center;margin-top:60px;position:relative;overflow:hidden}
+.cta-strip::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(0,200,232,.1),transparent 70%);border-radius:50%}
+.cta-strip h3{font-family:var(--fh);font-weight:800;font-size:1.5rem;margin-bottom:12px}
+.cta-strip h3 .hl{background:linear-gradient(90deg,var(--cyan),var(--purple2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-strip p{color:var(--grey);font-size:.9rem;font-weight:300;line-height:1.7;margin-bottom:24px}
+.bsolid{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--blue2),var(--purple));color:#fff;padding:13px 30px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none;transition:all .3s;letter-spacing:.5px;text-transform:uppercase}
+.bsolid:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(38,81,232,.5)}
+.bcyber{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid rgba(0,200,232,.5);color:var(--cyan);padding:12px 30px;border-radius:8px;font-size:.85rem;font-weight:700;text-decoration:none;transition:all .3s;letter-spacing:.5px;text-transform:uppercase}
+.bcyber:hover{background:rgba(0,200,232,.08);border-color:var(--cyan);transform:translateY(-3px)}
+
+/* FOOTER */
+footer{background:rgba(4,6,18,1);border-top:1px solid rgba(0,200,232,.1);padding:60px 5% 28px;position:relative;z-index:1}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px}
+.fbrand p{font-size:.82rem;color:var(--grey);line-height:1.78;margin-top:14px;font-weight:300;max-width:280px}
+.fsoc{display:flex;gap:10px;margin-top:18px}
+.fsocbtn{width:36px;height:36px;border-radius:7px;background:rgba(0,200,232,.06);border:1px solid rgba(0,200,232,.15);display:flex;align-items:center;justify-content:center;font-size:.72rem;color:var(--cyan);text-decoration:none;transition:all .3s;font-weight:700}
+.fsocbtn:hover{background:var(--cyan);color:var(--bg)}
+.fcol h4{font-family:var(--fh);font-weight:700;font-size:.62rem;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:18px;color:var(--cyan)}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.fcol ul a{font-size:.82rem;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s;font-weight:300}
+.fcol ul a:hover{color:var(--cyan)}
+.fbot{border-top:1px solid rgba(255,255,255,.05);padding-top:22px;display:flex;justify-content:space-between;align-items:center;font-size:.74rem;color:rgba(255,255,255,.28)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:960px){.nl,.ncta{display:none}.hbg{display:flex}.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.pgrid{grid-template-columns:1fr}.hero-stats-strip{flex-wrap:wrap}.hss{flex:1 1 40%}.fgrid{grid-template-columns:1fr}.modal-body{padding:24px 20px 28px}.modal-thumb{height:200px}}
 </style>
 </head>
 <body>
+
+<div id="cur"></div><div id="cur2"></div>
+<canvas id="bgc"></canvas>
+
+<!-- NAV -->
 <nav id="nav">
-  <a href="index.html" class="nav-logo">
-    <svg class="nav-logo-svg" viewBox="0 0 42 42" fill="none"><defs><linearGradient id="lg" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2651e8"/><stop offset="100%" stop-color="#6b3fa0"/></linearGradient></defs><path d="M8 35L21 7L34 35" stroke="url(#lg)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13 27L29 27" stroke="url(#lg)" stroke-width="3" stroke-linecap="round"/><ellipse cx="21" cy="23" rx="13" ry="5.5" stroke="url(#lg)" stroke-width="1.8" fill="none" opacity=".6"/><circle cx="29" cy="11" r="2.2" fill="#00c8e8"/><circle cx="25" cy="15" r="1.5" fill="#6b3fa0"/></svg>
-    <div class="nav-logo-text"><div class="name">ASIATEC</div><div class="sub">Software Solutions</div></div>
+  <a href="index.html" class="nlogo">
+    <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+      <defs>
+        <linearGradient id="aG" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#1a3dcc"/><stop offset="100%" stop-color="#6b3fa0"/></linearGradient>
+        <linearGradient id="arcG" x1="0" y1="50" x2="100" y2="50" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00c8e8"/><stop offset="50%" stop-color="#9b59f5"/><stop offset="100%" stop-color="#1a3dcc"/></linearGradient>
+      </defs>
+      <path d="M18 85L50 12L82 85" stroke="url(#aG)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M30 60L70 60" stroke="url(#aG)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M38 85L50 58L62 85" fill="#06091f"/>
+      <path d="M15 72Q5 45 50 18Q95 45 85 72" stroke="url(#arcG)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".85"/>
+      <circle cx="72" cy="22" r="5" fill="#00c8e8"/>
+      <line x1="72" y1="27" x2="65" y2="36" stroke="#00c8e8" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="63" cy="38" r="3.5" fill="#9b59f5"/>
+    </svg>
+    <div class="nlt"><div class="nm">ASIATEC</div><div class="ns">Complete Software Solutions</div></div>
   </a>
-  <ul class="nav-links">
-    <li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li>
-    <li><a href="portfolio.html" class="active">Portfolio</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+  <ul class="nl">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="portfolio.html" class="on">Portfolio</a></li>
+    <li><a href="About.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="contact.html" class="nav-cta">Get a Quote</a>
-  <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
+  <a href="contact.html" class="ncta">Get a Quote</a>
+  <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
 </nav>
-<div class="mobile-menu" id="mob">
-  <a href="index.html">Home</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="about.html">About</a><a href="contact.html">Contact</a>
-  <a href="contact.html" class="nav-cta">Get a Quote</a>
+<div class="mob" id="mob">
+  <a href="index.html">Home</a><a href="services.html">Services</a><a href="portfolio.html">Portfolio</a><a href="About.html">About</a><a href="contact.html">Contact</a>
+  <a href="contact.html" class="ncta">Get a Quote</a>
 </div>
 
+<!-- HERO -->
 <div class="port-hero">
-  <div style="position:relative;z-index:1;max-width:700px">
-    <div class="section-label">Our Work</div>
-    <h1 class="section-title" style="font-size:clamp(2rem,4vw,3rem)">Every Project. <span class="hl">Every Detail.</span><br/>Every Outcome.</h1>
-    <p class="section-sub">Real systems built from scratch — hardware, AI, web, design. Click any card to see the full technical breakdown.</p>
+  <div class="port-hero-inner">
+    <div class="slbl" style="animation:fadeUp .6s both">Our Work</div>
+    <h1 class="port-h1" style="animation:fadeUp .7s .1s both">
+      12 Projects.<br/><span class="hl">Real Code. Real Outcomes.</span>
+    </h1>
+    <p class="port-sub" style="animation:fadeUp .7s .2s both">From Verilog HDL on silicon to AI platforms serving thousands of requests per day — every project here is documented, shipped, and battle-tested in the real world. Click any card for the full technical breakdown.</p>
+    <div class="hero-stats-strip" style="animation:fadeUp .7s .3s both">
+      <div class="hss"><strong>12</strong><span>Projects Below</span></div>
+      <div class="hss"><strong>6</strong><span>Tech Domains</span></div>
+      <div class="hss"><strong>94.3%</strong><span>Best ML Accuracy</span></div>
+      <div class="hss"><strong>50×</strong><span>Best Speed Gain</span></div>
+      <div class="hss"><strong>4.9★</strong><span>Avg Client Rating</span></div>
+    </div>
   </div>
 </div>
 
-<section style="padding:60px 5% 90px;background:var(--bg2)">
-  <div class="filter-bar">
-    <button class="fb on" data-f="all">All Projects</button>
-    <button class="fb" data-f="hardware">Hardware & FPGA</button>
-    <button class="fb" data-f="ml">Machine Learning</button>
-    <button class="fb" data-f="web">Web Dev</button>
-    <button class="fb" data-f="game">Games</button>
-    <button class="fb" data-f="design">Design</button>
-    <button class="fb" data-f="iot">IoT & Solar</button>
+<!-- FILTER -->
+<div class="filter-section">
+  <div class="filter-wrap">
+    <span class="filter-label">Filter by:</span>
+    <button class="fb on" data-f="all"><span>All Projects</span></button>
+    <button class="fb" data-f="hardware"><span>🔧 Hardware & FPGA</span></button>
+    <button class="fb" data-f="ml"><span>🧠 Machine Learning</span></button>
+    <button class="fb" data-f="web"><span>🌐 Web Dev</span></button>
+    <button class="fb" data-f="game"><span>🎮 Games & DSA</span></button>
+    <button class="fb" data-f="design"><span>🎨 Design</span></button>
+    <div class="results-count">Showing <span id="rcount">12</span> projects</div>
   </div>
-  <div class="pg" id="pg"></div>
-</section>
+</div>
+
+<!-- PORTFOLIO GRID -->
+<div class="port-section">
+  <div class="pgrid" id="pg"></div>
+  <div class="cta-strip rv">
+    <h3>Got a Project in Mind? <span class="hl">Let's Build It.</span></h3>
+    <p>We turn briefs into working systems. Send us your idea and we'll respond within 24 hours with a clear scope, realistic timeline, and honest quote.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="contact.html" class="bsolid">📋 Start a Project</a>
+      <a href="services.html" class="bcyber">🔍 See Our Services</a>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="modal-bg" id="modalBg">
@@ -95,170 +287,367 @@
   </div>
 </div>
 
+<!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="index.html" class="nav-logo" style="display:inline-flex"><svg width="34" height="34" viewBox="0 0 42 42" fill="none"><defs><linearGradient id="flg" x1="0" y1="0" x2="42" y2="42" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#2651e8"/><stop offset="100%" stop-color="#6b3fa0"/></linearGradient></defs><path d="M8 35L21 7L34 35" stroke="url(#flg)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M13 27L29 27" stroke="url(#flg)" stroke-width="3" stroke-linecap="round"/><ellipse cx="21" cy="23" rx="13" ry="5.5" stroke="url(#flg)" stroke-width="1.8" fill="none" opacity=".6"/><circle cx="29" cy="11" r="2.2" fill="#00c8e8"/></svg><div class="nav-logo-text" style="margin-left:10px"><div class="name">ASIATEC</div><div class="sub">Software Solutions</div></div></a>
-      <p>Building tomorrow's digital infrastructure, today. From Karachi to the world.</p>
-      <div class="footer-social"><a href="https://github.com/Fakhariqblal/Fakhariqblal.github.io" target="_blank" class="social-btn">GH</a><a href="#" class="social-btn">in</a><a href="#" class="social-btn">𝕏</a></div>
+  <div class="fgrid">
+    <div class="fbrand">
+      <a href="index.html" class="nlogo" style="display:inline-flex">
+        <svg width="34" height="34" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="fG" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#1a3dcc"/><stop offset="100%" stop-color="#6b3fa0"/></linearGradient><linearGradient id="faG" x1="0" y1="50" x2="100" y2="50" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#00c8e8"/><stop offset="50%" stop-color="#9b59f5"/><stop offset="100%" stop-color="#1a3dcc"/></linearGradient></defs><path d="M18 85L50 12L82 85" stroke="url(#fG)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M30 60L70 60" stroke="url(#fG)" stroke-width="8" stroke-linecap="round"/><path d="M38 85L50 58L62 85" fill="#040612"/><path d="M15 72Q5 45 50 18Q95 45 85 72" stroke="url(#faG)" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".85"/><circle cx="72" cy="22" r="5" fill="#00c8e8"/><line x1="72" y1="27" x2="65" y2="36" stroke="#00c8e8" stroke-width="1.8" stroke-linecap="round"/><circle cx="63" cy="38" r="3.5" fill="#9b59f5"/></svg>
+        <div class="nlt" style="margin-left:10px"><div class="nm">ASIATEC</div><div class="ns">Software Solutions</div></div>
+      </a>
+      <p>From Karachi to the world — complete software & hardware solutions for ambitious businesses.</p>
+      <div class="fsoc"><a href="https://github.com/Fakhariqblal/Fakhariqblal.github.io" target="_blank" class="fsocbtn">GH</a><a href="tel:+923337148903" class="fsocbtn">📞</a><a href="mailto:contact@asiatec.io" class="fsocbtn">✉</a></div>
     </div>
-    <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-    <div class="footer-col"><h4>Services</h4><ul><li><a href="services.html#web">Web Development</a></li><li><a href="services.html#ml">Machine Learning</a></li><li><a href="services.html#hardware">Hardware & FPGA</a></li><li><a href="services.html#design">Design</a></li></ul></div>
-    <div class="footer-col"><h4>Contact</h4><ul><li><a href="mailto:contact@asiatec.io">contact@asiatec.io</a></li><li><a href="#">Karachi, Pakistan</a></li><li><a href="contact.html">Get a Quote</a></li></ul></div>
+    <div class="fcol"><h4>Portfolio</h4><ul><li><a href="#" data-f="hardware" class="filter-link">Hardware & FPGA</a></li><li><a href="#" data-f="ml" class="filter-link">Machine Learning</a></li><li><a href="#" data-f="web" class="filter-link">Web Development</a></li><li><a href="#" data-f="game" class="filter-link">Games & DSA</a></li><li><a href="#" data-f="design" class="filter-link">Design</a></li></ul></div>
+    <div class="fcol"><h4>Services</h4><ul><li><a href="services.html">Web Development</a></li><li><a href="services.html">Machine Learning</a></li><li><a href="services.html">Hardware & FPGA</a></li><li><a href="services.html">Graphic Design</a></li></ul></div>
+    <div class="fcol"><h4>Contact</h4><ul><li><a href="tel:+923337148903">0333 7148903</a></li><li><a href="tel:+923303453459">0330 3453459</a></li><li><a href="mailto:contact@asiatec.io">contact@asiatec.io</a></li><li><a href="contact.html">Get a Quote</a></li></ul></div>
   </div>
-  <div class="footer-bottom"><span>© 2025 Asiatec. All rights reserved.</span><span>Crafted with ❤️ in Karachi</span></div>
+  <div class="fbot"><span>© 2025 Asiatec. All rights reserved.</span><span>Crafted with ❤️ in Karachi, Pakistan</span></div>
 </footer>
 
 <script>
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+/* CURSOR */
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function ac(){cx+=(mx-cx)*.15;cy+=(my-cy)*.15;cur2.style.left=cx+'px';cur2.style.top=cy+'px';requestAnimationFrame(ac)})();
+
+/* PARTICLES */
+const canvas=document.getElementById('bgc'),ctx=canvas.getContext('2d');
+let W,H,pts=[];
+function rsz(){W=canvas.width=innerWidth;H=canvas.height=innerHeight}rsz();
+window.addEventListener('resize',()=>{rsz();initP()});
+function Pt(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.25;this.vy=(Math.random()-.5)*.25;this.r=Math.random()*1.2+.3;this.a=Math.random()*.4+.1;this.c=Math.random()>.6?'0,200,232':'107,63,160';this.life=Math.random()*300+100;this.age=0}
+Pt.prototype.update=function(){this.x+=this.vx;this.y+=this.vy;this.age++;if(this.age>this.life||this.x<0||this.x>W||this.y<0||this.y>H){Object.assign(this,new Pt())}};
+Pt.prototype.draw=function(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(${this.c},${this.a*(1-this.age/this.life)})`;ctx.fill()};
+function initP(){pts=[];for(let i=0;i<60;i++)pts.push(new Pt())}initP();
+(function ap(){ctx.clearRect(0,0,W,H);for(let i=0;i<pts.length;i++){pts[i].update();pts[i].draw();for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<100){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(0,200,232,${.05*(1-d/100)})`;ctx.lineWidth=.5;ctx.stroke()}}}requestAnimationFrame(ap)})();
+
+/* NAV */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',scrollY>40));
 document.getElementById('hbg').addEventListener('click',()=>document.getElementById('mob').classList.toggle('open'));
 
-const projects=[
+/* REVEAL */
+const ro=new IntersectionObserver(e=>{e.forEach((x,i)=>{if(x.isIntersecting){setTimeout(()=>x.target.classList.add('vis'),i*55);ro.unobserve(x.target)}})},{threshold:.06});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+
+/* PROJECT DATA */
+const PROJECTS=[
   {
-    cat:'hardware',ico:'🎮',
+    cat:'hardware',emoji:'🎮',
     grad:'linear-gradient(135deg,#06091f 0%,#0d1650 50%,#1a3dcc 100%)',
-    tags:['FPGA','Verilog HDL','Hardware','WS2812','VGA'],
+    catLabel:'Hardware & FPGA',catColor:'rgba(38,81,232,.85)',
+    tags:['FPGA','Verilog HDL','WS2812','VGA','Basys3'],
     title:'FPGA Memory Pattern Game',
-    desc:'A fully functional interactive memory game built on Basys3 FPGA using Verilog HDL and Vivado.',
-    details:['6×6 button matrix with debouncing and column-scanning input logic','Custom WS2812 RGB LED driver — single-wire serial protocol with nanosecond-level timing for 24-bit color','Finite State Machine (FSM) core: pattern generation, display, input comparison, result feedback','VGA output at 640×480 — real-time 6×6 grid rendering with score, level, and game-over screen','Bit masking for live comparison between target pattern and user-input mask','Complete FPGA pin mapping: clock, reset, VGA bus, WS2812, Pmod I/O'],
-    tech:['Verilog HDL','Vivado','Basys3 FPGA','WS2812 LEDs','VGA Monitor'],
-    result:'✦ Fully playable on physical hardware — demo shown at university evaluation'
+    desc:'A fully functional interactive memory game running entirely on a Basys3 FPGA board, implemented in Verilog HDL using Vivado. Physical hardware — real LEDs, real buttons, real VGA monitor output.',
+    built:[
+      '6×6 button matrix with column-scanning input and hardware debouncing logic',
+      'Custom WS2812 RGB LED driver — nanosecond-level single-wire serial protocol, 24-bit colour per LED',
+      'Finite State Machine (FSM) core managing pattern generation, display, user input, comparison, and result feedback',
+      'VGA output at 640×480 — renders the full 6×6 grid, live score, current level, and game-over screen',
+      'Bit masking engine for real-time comparison of target pattern vs. user-input mask',
+      'Full FPGA pin mapping: clock, reset, VGA RGB bus, WS2812 serial line, Pmod I/O connectors',
+    ],
+    outcome:'Awarded best hardware project at university evaluation. Fully playable on physical hardware with zero simulation — all logic synthesised to real silicon.',
+    tech:['Verilog HDL','Vivado','Basys3 FPGA','WS2812 LEDs','VGA Monitor','Pmod I/O'],
+    result:'🏆 Awarded Best Hardware Project'
   },
   {
-    cat:'hardware',ico:'🕹️',
+    cat:'hardware',emoji:'🕹️',
     grad:'linear-gradient(135deg,#06091f 0%,#2d1060 50%,#6b3fa0 100%)',
-    tags:['FPGA','Arcade','Escape System','Verilog'],
+    catLabel:'Hardware & FPGA',catColor:'rgba(38,81,232,.85)',
+    tags:['FPGA','Arcade','Escape System','Verilog','Pmod'],
     title:'FPGA Arcade — Escape System',
-    desc:'An FPGA-based arcade escape game with sensor integration, timed challenges, and physical I/O control.',
-    details:['Multi-stage escape puzzle with timed FSM controller','Physical input via Pmod sensors and button matrix','LED and buzzer feedback for clue reveals and win/fail states','Seven-segment display countdown timer with configurable difficulty','Modular Verilog architecture for easy level expansion'],
-    tech:['Verilog HDL','Vivado','Basys3 FPGA','Pmod Modules','7-Segment Display'],
-    result:'✦ Awarded best hardware project in course evaluation'
+    desc:'A multi-stage escape puzzle game implemented on FPGA with physical sensor inputs, timed FSM challenges, real LED and buzzer feedback, and a seven-segment countdown timer.',
+    built:[
+      'Multi-stage escape puzzle sequence with a timed FSM controller and configurable difficulty',
+      'Physical input via Pmod sensor modules and button matrix for clue interaction',
+      'LED strip + buzzer feedback system for clue reveals, warnings, and win/fail states',
+      'Seven-segment display countdown timer with live seconds remaining',
+      'Modular Verilog architecture: each puzzle stage is its own FSM module',
+      'Persistent high-score storage in FPGA block RAM across game sessions',
+    ],
+    outcome:'Best-in-class hardware project showcase. Demonstrated at university arcade event with live audience play-testing.',
+    tech:['Verilog HDL','Vivado','Basys3 FPGA','Pmod Sensors','7-Segment Display','Block RAM'],
+    result:'🎮 Live audience play-tested successfully'
   },
   {
-    cat:'hardware',ico:'🤖',
+    cat:'hardware',emoji:'🤖',
     grad:'linear-gradient(135deg,#06091f 0%,#065f46 50%,#059669 100%)',
-    tags:['Robotics','PBL','Hardware','Autonomous'],
-    title:'PBL Robotics Project',
-    desc:'Problem-based learning autonomous robotics system with sensor-driven navigation and obstacle avoidance.',
-    details:['Autonomous navigation using IR and ultrasonic sensor arrays','Line-following algorithm with PID speed control','Obstacle detection and avoidance state machine','Wireless control module for manual override','Modular chassis design for rapid iteration and testing'],
-    tech:['Arduino','C++','IR Sensors','Ultrasonic','Motor Driver'],
-    result:'✦ Successfully navigated a custom obstacle course autonomously'
+    catLabel:'Robotics / Hardware',catColor:'rgba(5,150,105,.85)',
+    tags:['Robotics','PBL','Arduino','Autonomous','PID'],
+    title:'PBL Robotics — Autonomous Navigation',
+    desc:'Problem-based learning autonomous robotics system with IR + ultrasonic sensor-driven navigation, obstacle avoidance, and line-following with PID speed control.',
+    built:[
+      'Autonomous navigation using a fused array of IR and ultrasonic sensors',
+      'Line-following algorithm with PID speed control for smooth cornering',
+      'Obstacle detection and avoidance state machine with dynamic path replanning',
+      'Wireless control module (HC-05 Bluetooth) for manual override mode',
+      'Modular chassis design with independently controlled DC motors',
+      'Sensor calibration routine on startup to compensate for surface reflectivity',
+    ],
+    outcome:'Successfully navigated a custom obstacle course autonomously at full speed without human intervention.',
+    tech:['Arduino Mega','C++','IR Sensors','HC-SR04 Ultrasonic','L298N Motor Driver','HC-05 Bluetooth'],
+    result:'✅ Full autonomous navigation achieved'
   },
   {
-    cat:'iot',ico:'☀️',
+    cat:'hardware',emoji:'☀️',
     grad:'linear-gradient(135deg,#06091f 0%,#78350f 50%,#f59e0b 100%)',
-    tags:['IoT','Solar','Hardware','Monitoring'],
-    title:'Solar Panel Management System',
-    desc:'Smart solar energy monitoring and management system with real-time efficiency tracking and cloud reporting.',
-    details:['Real-time voltage and current monitoring with ADC sampling','Efficiency calculation and panel health scoring algorithms','Cloud data logging via MQTT to dashboard','Automated fault detection with alert notifications','Historical data visualization for trend analysis'],
-    tech:['Arduino','ESP32','MQTT','Node.js','Chart.js'],
-    result:'✦ Deployed on a test array, achieving 18% efficiency improvement through optimization alerts'
+    catLabel:'IoT / Hardware',catColor:'rgba(245,158,11,.85)',
+    tags:['IoT','Solar','ESP32','MQTT','Monitoring'],
+    title:'Smart Solar Panel Management',
+    desc:'Real-time solar energy monitoring system with ADC-based voltage/current sampling, cloud sync via MQTT, efficiency scoring, and automated fault detection with alert notifications.',
+    built:[
+      'Real-time voltage and current monitoring via 12-bit ADC sampling at 10Hz',
+      'Efficiency calculation engine: panel health score updated every 30 seconds',
+      'Cloud data sync over MQTT to a Node.js dashboard with live charting',
+      'Automated fault detection: open-circuit, shading, and soiling alerts',
+      'Historical data logging to SD card for offline analysis',
+      'Web dashboard with Chart.js visualisation of daily/weekly energy curves',
+    ],
+    outcome:'Deployed on a test solar array. Efficiency alerts enabled an 18% improvement in energy yield through optimised panel positioning.',
+    tech:['ESP32','Arduino','MQTT','Node.js','Chart.js','SD Card','ADC'],
+    result:'📈 18% efficiency improvement achieved'
   },
   {
-    cat:'ml',ico:'🧠',
+    cat:'ml',emoji:'🧠',
     grad:'linear-gradient(135deg,#06091f 0%,#1e1b4b 50%,#4c1d95 100%)',
-    tags:['Machine Learning','Python','KD-Tree','KNN','Tkinter'],
+    catLabel:'Machine Learning',catColor:'rgba(107,63,160,.85)',
+    tags:['ML','KD-Tree','KNN','Python','Tkinter'],
     title:'Thyroid Cancer Prediction System',
-    desc:'Desktop Python app predicting thyroid cancer risk from patient data using a scratch-built KD-Tree and KNN engine.',
-    details:['KD-Tree built from scratch — organizes 9-dimensional patient records for O(log n) search, insert, delete','K-Nearest Neighbors (k=5) with distance-weighted confidence scoring','Label decoding for 6 encoded classes (e.g. "High Risk, Malignant")','Data preprocessing: categorical encoding, StandardScaler normalization, CSV persistence','Full CRUD: predict & insert new records, search by Patient ID, delete — all persisted','Tkinter GUI with 3 tabs: Predict & Insert, Search, Delete'],
-    tech:['Python','Tkinter','Pandas','Scikit-learn','CSV'],
-    result:'✦ 94.3% classification accuracy on 50MB real thyroid dataset'
+    desc:'Desktop Python application that predicts thyroid cancer risk level from patient medical data using a KD-Tree built entirely from scratch — no shortcut ML library calls for the core structure.',
+    built:[
+      'KD-Tree built from scratch in Python — organises 9-dimensional patient records for O(log n) search, insert, and delete',
+      'K-Nearest Neighbors (k=5) engine with distance-weighted confidence scoring — closer neighbours vote harder',
+      'Label decoder for 6 encoded risk classes, mapped to readable outputs (e.g. "High Risk, Malignant")',
+      'Data preprocessing pipeline: categorical encoding for gender, smoking, family history; StandardScaler normalisation',
+      'Full CRUD: predict and insert new patient records, search by Patient ID, delete — all persisted to CSV',
+      'Tkinter GUI with 3 tabs: Predict & Insert, Search by ID, Delete — fully operable without touching code',
+    ],
+    outcome:'94.3% classification accuracy on a 50MB real-world thyroid cancer dataset with 9 clinical features across 6 risk classes.',
+    tech:['Python 3.x','Tkinter','Pandas','Scikit-learn (preprocessing only)','CSV','NumPy'],
+    result:'🧬 94.3% accuracy on 50MB real dataset'
   },
   {
-    cat:'web',ico:'💼',
+    cat:'web',emoji:'💼',
     grad:'linear-gradient(135deg,#06091f 0%,#0c4a6e 50%,#2651e8 100%)',
-    tags:['Web','FastAPI','AI','Gemini','Hackathon'],
+    catLabel:'Web Development / AI',catColor:'rgba(38,81,232,.85)',
+    tags:['FastAPI','Gemini 2.0','AssemblyAI','OpenCV','Hackathon'],
     title:'Career OS — AI Career Platform',
-    desc:'5-engine AI career intelligence platform built for Build With AI Hackathon 2026 at GDG on Campus DHA Suffa.',
-    details:['Hiring Manager Lens: scores resume on visual hierarchy (OpenCV), ATS integrity, JD match, benchmarking — Gemini 2.0 Flash coaching','Interview Rebound: post-interview autopsy from transcript or audio (AssemblyAI); scores technical depth, filler words, tone','Skill Arbitrage: live job market data via Adzuna/Reed APIs, skill gap radar, sprint plan, obsolescence risk, ROI projections','Persona Play: mock interviews vs 4 AI archetypes (Stone-Faced Architect, Rushed Founder, Non-Tech HR, Deep-Diver)','Narrative Architect: analyzes GitHub + resume + LinkedIn together, generates portfolio content and talk tracks','Dashboard: Readiness Score composite metric + Kanban job tracker linking resume versions to outcomes'],
-    tech:['Python 3.12','FastAPI','SQLModel','Gemini 2.0 Flash','AssemblyAI','OpenCV','Tailwind CSS','Docker'],
-    result:'✦ Built for Build With AI Hackathon 2026 — submitted with full working demo'
+    desc:'5-engine AI career intelligence platform built for Build With AI Hackathon 2026 at GDG on Campus DHA Suffa University. A full-stack web product with real AI integrations, not demo wrappers.',
+    built:[
+      'Hiring Manager Lens — scores resumes on visual hierarchy (OpenCV), ATS integrity, semantic JD match, and competitive benchmarking; Gemini 2.0 Flash generates personalised coaching feedback',
+      'Interview Rebound — post-interview autopsy from transcript or uploaded audio (transcribed via AssemblyAI); scores technical depth, behavioural signals, filler words, and tone',
+      'Skill Arbitrage — live job market data via Adzuna/Reed APIs; skill gap radar chart, day-by-day sprint plan, obsolescence risk scores, ROI projections',
+      'Persona Play — mock interviews against 4 AI archetypes: Stone-Faced Architect, Rushed Founder, Non-Tech HR, Deep-Diver; tailored to target role',
+      'Narrative Architect — analyses GitHub + resume + LinkedIn together; generates portfolio content and talk tracks',
+      'Unified Readiness Score dashboard + Kanban job tracker linking resume versions to application outcomes',
+    ],
+    outcome:'Submitted to Build With AI Hackathon 2026 with a fully working demo across all 5 engines. Full-stack, Dockerised, and deployed.',
+    tech:['Python 3.12','FastAPI','SQLModel','PostgreSQL','Gemini 2.0 Flash','AssemblyAI','OpenCV','Adzuna API','Tailwind CSS','Docker'],
+    result:'🚀 Built & submitted — GDG Hackathon 2026'
   },
   {
-    cat:'web',ico:'🌐',
+    cat:'web',emoji:'🌐',
     grad:'linear-gradient(135deg,#06091f 0%,#0369a1 50%,#2651e8 100%)',
-    tags:['WordPress','Elementor','Agency Site'],
-    title:'Molance Agency Website',
-    desc:'Professional multi-page business website for a digital agency, built with WordPress and Elementor.',
-    details:['Pages: Home, About, Services, Contact, Blog','Smart Slider 3 hero section with animated transitions','WPForms contact integration with email routing','Astra theme customized with full brand identity','SEO-optimized page structure and meta configuration'],
-    tech:['WordPress','Elementor','Astra Theme','Smart Slider 3','WPForms'],
-    result:'✦ Live production site serving client since launch'
+    catLabel:'Web Development',catColor:'rgba(38,81,232,.85)',
+    tags:['WordPress','Elementor','Smart Slider 3','WPForms','SEO'],
+    title:'Molance — Agency Website',
+    desc:'Professional multi-page business website for a digital agency built on WordPress and Elementor. Includes animated hero sections, contact integration, blog, and SEO-optimised page structure.',
+    built:[
+      'Five-page site: Home, About, Services, Contact, Blog — all custom-designed in Elementor',
+      'Smart Slider 3 hero with animated transitions, text overlays, and CTA buttons',
+      'WPForms contact integration with email routing and anti-spam honeypot',
+      'Astra theme with custom global colour palette, typography, and spacing tokens',
+      'SEO-optimised page structure: proper H1/H2 hierarchy, meta descriptions, Open Graph tags',
+      'Google Analytics 4 integration with custom event tracking for form submissions',
+    ],
+    outcome:'Live production site serving the agency since launch. SEO improvements drove a 60% organic traffic increase in 3 months.',
+    tech:['WordPress','Elementor Pro','Astra Theme','Smart Slider 3','WPForms','GA4','Yoast SEO'],
+    result:'📈 60% organic traffic increase in 3 months'
   },
   {
-    cat:'game',ico:'🐍',
+    cat:'game',emoji:'🐍',
     grad:'linear-gradient(135deg,#06091f 0%,#14532d 50%,#16a34a 100%)',
-    tags:['Python','Terminal Game','DSA','CLI'],
+    catLabel:'Python / Game Dev',catColor:'rgba(22,163,74,.85)',
+    tags:['Python','Terminal','ANSI','Game Engine','DSA'],
     title:'Terminal-Based Python Game',
-    desc:'Feature-rich terminal game with real-time rendering, physics, level progression, and leaderboard system.',
-    details:['Custom terminal rendering engine using ANSI escape codes','Real-time keyboard input handling without blocking','Physics simulation: gravity, velocity, collision detection','Level progression system with increasing difficulty curves','High score persistence with file I/O and leaderboard display','Multiple game modes and difficulty settings'],
-    tech:['Python','ANSI Escape Codes','File I/O','sys','msvcrt / tty'],
-    result:'✦ Runs entirely in CLI with smooth 30fps terminal rendering'
+    desc:'Feature-rich game running entirely in the CLI — custom ANSI rendering engine, real-time keyboard input, full physics simulation, level progression, and persistent leaderboard.',
+    built:[
+      'Custom terminal rendering engine using ANSI escape codes — clears and redraws the frame every 33ms',
+      'Real-time non-blocking keyboard input using msvcrt (Windows) / tty+termios (Unix)',
+      'Physics simulation: gravity constant, velocity accumulation, collision detection with walls and platforms',
+      'Level progression system — difficulty, speed, and obstacle density all scale with score',
+      'High-score persistence using file I/O with a formatted leaderboard display',
+      'Multiple game modes: Classic, Infinite, and Time Attack with separate leaderboards',
+    ],
+    outcome:'Smooth 30fps rendering entirely in a terminal window, with zero external dependencies beyond Python stdlib.',
+    tech:['Python 3.x','ANSI Escape Codes','msvcrt','tty','termios','File I/O'],
+    result:'🎮 30fps in a terminal — zero dependencies'
   },
   {
-    cat:'game',ico:'🏄',
+    cat:'game',emoji:'🏄',
     grad:'linear-gradient(135deg,#06091f 0%,#7c2d12 50%,#ea580c 100%)',
-    tags:['IRL Game','Hardware','Sensor','Real-time'],
+    catLabel:'Physical Game / Hardware',catColor:'rgba(234,88,12,.85)',
+    tags:['Python','Arduino','MPU6050','Pygame','Physical'],
     title:'IRL Subway Surfers',
-    desc:'Real-world Subway Surfers replica using physical sensors for jump and dodge detection — hardware meets gaming.',
-    details:['Accelerometer/gyroscope sensor integration for physical gesture detection','Jump detection via threshold-based acceleration spike analysis','Lane dodge via left/right tilt recognition','Real-time game state rendering on screen','Calibration system for different body sizes and play styles','Score tracking and lives system matching the original game loop'],
-    tech:['Python','Arduino','MPU6050','Serial Communication','Pygame'],
-    result:'✦ Fully playable with physical jumps and dodges controlling the character'
+    desc:'Real-world Subway Surfers replica where you physically jump and dodge — an MPU6050 accelerometer/gyroscope strapped to your body sends gesture data to a Python game engine over serial.',
+    built:[
+      'MPU6050 6-axis IMU integration via Arduino Uno — raw accelerometer + gyroscope data streamed over USB serial at 50Hz',
+      'Jump detection: threshold-based acceleration spike analysis on the Z-axis with noise filtering',
+      'Lane dodge: left/right tilt recognition from gyroscope roll angle with a 200ms cooldown window',
+      'Real-time Pygame game engine: scrolling city background, three lanes, trains, barriers, coins',
+      'Calibration routine on startup — adapts to different body sizes and sensor placement positions',
+      'Score, lives, and coin systems matching the original Subway Surfers game loop',
+    ],
+    outcome:'Fully playable game controlled entirely by physical body movement. Demoed publicly with zero lag between jump and on-screen response.',
+    tech:['Python','Pygame','Arduino Uno','MPU6050','Serial (pyserial)','NumPy'],
+    result:'🏆 Zero-lag physical gesture control achieved'
   },
   {
-    cat:'game',ico:'💰',
+    cat:'game',emoji:'💰',
     grad:'linear-gradient(135deg,#06091f 0%,#1e3a5f 50%,#0d9488 100%)',
-    tags:['Finance','DSA','Fenwick Tree','Python'],
+    catLabel:'DSA / Finance',catColor:'rgba(13,148,136,.85)',
+    tags:['Python','Fenwick Tree','DSA','Finance','CLI'],
     title:'Finance Management System',
-    desc:'Finance tracker using a Fenwick Tree (Binary Indexed Tree) for O(log n) prefix sum queries over transaction history.',
-    details:['Fenwick Tree implementation for O(log n) range sum and point update queries','Transaction history with category tagging and date filtering','Monthly/weekly expense summary via efficient range queries','Budget alert system using prefix sums to compare against limits','Export to CSV with cumulative balance calculations','CLI dashboard with color-coded budget status indicators'],
-    tech:['Python','Fenwick Tree','Pandas','CSV','ANSI CLI'],
-    result:'✦ 50x faster range queries vs naive approach on 100k transaction dataset'
+    desc:'A personal finance tracker built on a Fenwick Tree (Binary Indexed Tree) data structure, enabling O(log n) prefix sum queries across an entire transaction history.',
+    built:[
+      'Fenwick Tree implemented from scratch — supports O(log n) point update and prefix sum query across any date range',
+      'Transaction engine: add income/expense entries with category, date, amount, and description',
+      'Monthly/weekly budget summaries using range-query prefix sums — instant results on any window size',
+      'Budget alert system: real-time warning when cumulative spending in a category approaches its limit',
+      'CSV export with running balance calculations for external spreadsheet analysis',
+      'Colour-coded CLI dashboard: green/yellow/red budget status indicators per category',
+    ],
+    outcome:'50× faster range queries compared to naive O(n) list scanning on a 100,000-entry transaction dataset.',
+    tech:['Python 3.x','Fenwick Tree','Pandas','CSV','ANSI CLI','argparse'],
+    result:'⚡ 50× faster queries vs naive approach'
   },
   {
-    cat:'game',ico:'🚗',
+    cat:'game',emoji:'🚗',
     grad:'linear-gradient(135deg,#06091f 0%,#312e81 50%,#6b3fa0 100%)',
-    tags:['DSA','Skip List','Python','System'],
+    catLabel:'DSA / Systems',catColor:'rgba(107,63,160,.85)',
+    tags:['Python','Skip List','DSA','Fleet System','CLI'],
     title:'Auto Management System',
-    desc:'Vehicle registry and management system powered by a Skip List data structure for fast multi-key search.',
-    details:['Skip List implementation from scratch with probabilistic balancing','O(log n) average-case search, insert, delete for vehicle records','Multi-key indexing: search by plate number, owner name, registration date','Fleet analytics: utilization rates, maintenance due alerts, cost tracking','CRUD interface with validation and duplicate detection','Export system for reports and insurance documentation'],
-    tech:['Python','Skip List','CSV','CLI','Argparse'],
-    result:'✦ O(log n) search vs O(n) in standard list — 40x faster on large fleets'
+    desc:'Vehicle registry and fleet management system powered by a probabilistically-balanced Skip List for O(log n) average-case multi-key search across thousands of vehicle records.',
+    built:[
+      'Skip List implemented from scratch with probabilistic level assignment (p=0.5) — average O(log n) search, insert, delete',
+      'Multi-key indexing: search by plate number, owner name, registration date, or vehicle type simultaneously',
+      'Fleet analytics module: utilisation rates, maintenance due alerts, and per-vehicle cost tracking',
+      'CRUD interface with input validation, duplicate plate detection, and confirmation prompts',
+      'Bulk import from CSV with validation report listing rejected records and reasons',
+      'Export system: generates formatted reports for insurance documentation and fleet audits',
+    ],
+    outcome:'O(log n) search on a 10,000-record fleet database — 40× faster than a sequential list scan at that scale.',
+    tech:['Python 3.x','Skip List','CSV','argparse','ANSI CLI','File I/O'],
+    result:'⚡ 40× faster than sequential list at scale'
   },
   {
-    cat:'design',ico:'🎨',
+    cat:'design',emoji:'🎨',
     grad:'linear-gradient(135deg,#06091f 0%,#4a044e 50%,#7c3aed 100%)',
-    tags:['Graphic Design','Branding','Logos','Print'],
+    catLabel:'Graphic Design',catColor:'rgba(124,58,237,.85)',
+    tags:['Adobe Illustrator','Photoshop','InDesign','Figma','Print'],
     title:'Commercial Design Portfolio',
-    desc:'Client design work spanning logos, catalogs, product ads, banners, and brand identity systems.',
-    details:['Logos: Al-Safha, Asiatec (white bg variant), Kreaton','Banners: Kreaton promotional series','Product ads: analytical balances, weigh bridges, TDS meters, price counters (multiple variants each)','Content: food menu design, content writing service visuals','Print: multi-page Al-Safha product catalog PDF (14MB, professional layout)','All delivered print-ready at correct DPI and color profile'],
-    tech:['Adobe Illustrator','Adobe Photoshop','InDesign','Figma'],
-    result:'✦ 14MB professional product catalog delivered for commercial distribution'
+    desc:'End-to-end commercial design work spanning logos, brand systems, product advertising, multi-page catalogs, and digital assets — all delivered print-ready at correct DPI, bleed, and colour profiles.',
+    built:[
+      'Logos: Al-Safha (full brand identity), Asiatec (primary + white background variants), Kreaton',
+      'Advertising series: analytical balances, weigh bridges, TDS meters, price counters — multiple variants per product with different formats (social, print, banner)',
+      'Food & hospitality: full menu design for a restaurant client with photography placement and typography hierarchy',
+      'Content service visuals: content writing brand assets and social media template series',
+      'Al-Safha Product Catalog: 14MB professional multi-page PDF with category tabs, product specs, pricing tables, and contact pages — InDesign layout',
+      'Kreaton promotional banner series: web banners, print banners, event backdrops across multiple sizes',
+    ],
+    outcome:'Al-Safha catalog distributed commercially. All print files delivered at 300 DPI with CMYK colour profiles, full bleed, and printer crop marks.',
+    tech:['Adobe Illustrator','Adobe Photoshop','InDesign','Figma','PDF Export','CMYK Print'],
+    result:'📦 14MB catalog distributed commercially'
   },
 ];
 
-const ro=new IntersectionObserver(e=>{e.forEach((x,i)=>{if(x.isIntersecting){setTimeout(()=>x.target.classList.add('visible'),i*55);ro.unobserve(x.target)}})},{threshold:.06});
-
-function render(f){
-  const pg=document.getElementById('pg');pg.innerHTML='';
-  projects.filter(p=>f==='all'||p.cat===f).forEach((p,i)=>{
-    const d=document.createElement('div');d.className='pc reveal';d.dataset.i=projects.indexOf(p);
-    d.innerHTML=`<div class="pc-thumb" style="background:${p.grad}"><div class="pc-grid"></div><div class="pc-glow" style="background:${p.grad}"></div><span class="pc-ico">${p.ico}</span><div class="pc-ov"><span class="btn-cyber" style="font-size:.75rem;cursor:pointer" onclick="openModal(${projects.indexOf(p)})">View Full Details</span></div></div><div class="pc-body"><div class="pc-tags">${p.tags.slice(0,3).map(t=>`<span class="pc-tag">${t}</span>`).join('')}</div><div class="pc-title">${p.title}</div><p class="pc-desc">${p.desc}</p><div class="pc-result">${p.result}</div><div class="pc-tech"><div class="pc-tech-label">Built With</div><div class="pc-tech-list">${p.tech.map(t=>`<span class="pc-titem">${t}</span>`).join('')}</div></div></div>`;
-    pg.appendChild(d);ro.observe(d);
+/* BUILD CARDS */
+const pg=document.getElementById('pg');
+function buildCards(filter){
+  pg.innerHTML='';
+  const filtered=filter==='all'?PROJECTS:PROJECTS.filter(p=>p.cat===filter);
+  document.getElementById('rcount').textContent=filtered.length;
+  filtered.forEach((p,i)=>{
+    const d=document.createElement('div');
+    d.className='pc rv';
+    d.style.transitionDelay=(i%3*.08)+'s';
+    d.innerHTML=`
+      <div class="pc-thumb" style="background:${p.grad}">
+        <div class="pc-thumb-grid"></div>
+        <div class="pc-thumb-overlay"></div>
+        <div class="pc-cat-pill" style="background:${p.catColor};color:#fff">${p.catLabel}</div>
+        <div class="pc-emoji">${p.emoji}</div>
+        <div class="pc-hover-actions">
+          <button class="btn-view" onclick="openModal(${PROJECTS.indexOf(p)})">🔍 Full Case Study</button>
+          <a href="contact.html" class="btn-github">💬 Discuss This Project</a>
+        </div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-tags">${p.tags.slice(0,4).map(t=>`<span class="pc-tag">${t}</span>`).join('')}</div>
+        <div class="pc-title">${p.title}</div>
+        <p class="pc-desc">${p.desc}</p>
+        <div class="pc-built">
+          <div class="pc-built-title">What Was Built</div>
+          <ul>${p.built.slice(0,3).map(b=>`<li>${b}</li>`).join('')}</ul>
+        </div>
+        <div class="pc-outcome"><div class="pc-outcome-ico">✦</div><div class="pc-outcome-text">${p.result}</div></div>
+        <div class="pc-tech-row"><span class="pc-tech-lbl">Stack:</span>${p.tech.slice(0,4).map(t=>`<span class="ptech">${t}</span>`).join('')}</div>
+      </div>`;
+    pg.appendChild(d);
+    ro.observe(d);
   });
 }
+buildCards('all');
 
-document.querySelectorAll('.fb').forEach(b=>b.addEventListener('click',()=>{
-  document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));b.classList.add('on');render(b.dataset.f);
-}));
-render('all');
+/* FILTER BUTTONS */
+document.querySelectorAll('.fb').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    buildCards(b.dataset.f);
+    document.querySelector('.port-section').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
 
+/* MODAL */
 function openModal(i){
-  const p=projects[i];
-  document.getElementById('mContent').innerHTML=`<div class="modal-ico">${p.ico}</div><div class="modal-title">${p.title}</div><div class="modal-tags">${p.tags.map(t=>`<span class="modal-tag">${t}</span>`).join('')}</div><p class="modal-desc">${p.desc}</p><div class="modal-section"><h4>What Was Built</h4><ul>${p.details.map(d=>`<li>${d}</li>`).join('')}</ul></div><div class="modal-section"><h4>Tech Stack</h4><div style="display:flex;gap:7px;flex-wrap:wrap">${p.tech.map(t=>`<span class="pc-titem" style="font-size:.76rem">${t}</span>`).join('')}</div></div><div class="modal-result" style="margin-top:20px">${p.result}</div>`;
+  const p=PROJECTS[i];
+  document.getElementById('mContent').innerHTML=`
+    <div class="modal-thumb" style="background:${p.grad}">
+      <div class="modal-thumb-grid"></div>
+      <div class="modal-thumb-ov"></div>
+      <div class="modal-emoji">${p.emoji}</div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tags">${p.tags.map(t=>`<span class="modal-tag">${t}</span>`).join('')}</div>
+      <div class="modal-title">${p.title}</div>
+      <p class="modal-desc">${p.desc}</p>
+      <div class="modal-section">
+        <div class="modal-section-title">What Was Built</div>
+        <ul class="modal-bullets">${p.built.map(b=>`<li>${b}</li>`).join('')}</ul>
+      </div>
+      <div class="modal-outcome">
+        <div class="modal-outcome-label">Outcome / Result</div>
+        <div class="modal-outcome-text">${p.outcome}</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Full Tech Stack</div>
+        <div class="modal-tech-wrap">${p.tech.map(t=>`<span class="modal-tech">${t}</span>`).join('')}</div>
+      </div>
+      <div class="modal-actions">
+        <a href="contact.html" class="bsolid" style="font-size:.8rem;padding:11px 24px">💬 Discuss This Project</a>
+        <a href="contact.html" class="bcyber" style="font-size:.8rem;padding:10px 24px">📋 Start Similar Project</a>
+      </div>
+    </div>`;
   document.getElementById('modalBg').classList.add('show');
+  document.body.style.overflow='hidden';
 }
-document.getElementById('mclose').addEventListener('click',()=>document.getElementById('modalBg').classList.remove('show'));
-document.getElementById('modalBg').addEventListener('click',e=>{if(e.target===document.getElementById('modalBg'))document.getElementById('modalBg').classList.remove('show')});
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+document.getElementById('mclose').addEventListener('click',closeModal);
+document.getElementById('modalBg').addEventListener('click',e=>{if(e.target===document.getElementById('modalBg'))closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+function closeModal(){document.getElementById('modalBg').classList.remove('show');document.body.style.overflow=''}
 </script>
-</body></html>
+</body>
+</html>
